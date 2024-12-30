@@ -1,11 +1,9 @@
-import type { Timestamp } from "firebase-admin/firestore";
-
 export const FIRESTORE_PATH = {
 	ranking: (
 		country: string,
 		genreId: number,
 		id: number,
-		createdAt: Timestamp,
+		createdAt: string,
 		rank: number,
 	) =>
 		`${country}/${VersionConstant.v1}/${genreId}/${VersionConstant.v1}/${id}/${VersionConstant.v1}/${createdAt}/${rank}`,

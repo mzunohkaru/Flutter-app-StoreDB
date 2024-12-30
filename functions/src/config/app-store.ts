@@ -6,4 +6,5 @@ export const APP_STORE_URL = {
 
 export const APP_STORE_COUNTRY = {
 	jp: "jp",
+	us: "us",
 };
