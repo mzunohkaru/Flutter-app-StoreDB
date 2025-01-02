@@ -1,7 +1,12 @@
 import { onSchedule } from "firebase-functions/scheduler";
 
-import { CONSTANTS, MAX_INSTANCES, SCHEDULE } from "../../constant";
-import { batchRanking } from "../../features";
+import {
+	CONSTANTS,
+	ErrorMessage,
+	MAX_INSTANCES,
+	SCHEDULE,
+} from "../../constant";
+import { batchRanking, sendMessage } from "../../features";
 import { APP_STORE_COUNTRY, APP_STORE_URL } from "../../config/app-store";
 
 //* USA
@@ -18,6 +23,10 @@ export const schedulePM1 = onSchedule(
 		await batchRanking({
 			country: APP_STORE_COUNTRY.us,
 			genreId: APP_STORE_URL.socialNetworking,
+		}).catch((_) => {
+			sendMessage(
+				ErrorMessage(APP_STORE_COUNTRY.us, APP_STORE_URL.socialNetworking),
+			);
 		});
 	},
 );

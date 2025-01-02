@@ -18,5 +18,8 @@ export async function upsertRanking(
 		.doc(
 			FIRESTORE_PATH.ranking(country, genreId, ranking.appId, createdAt, rank),
 		)
-		.set(ranking, { merge: true });
+		.set(ranking, { merge: true })
+		.catch((error) => {
+			throw error;
+		});
 }

@@ -21,3 +21,6 @@ export const SCHEDULE = {
 	am3: "0 3 * * *",
 	pm1: "0 12 * * *",
 } as const;
+
+export const ErrorMessage = (country: string, genreId: number) =>
+	`国:${country} ジャンル:${genreId} - ランキング取得に失敗しました`;
