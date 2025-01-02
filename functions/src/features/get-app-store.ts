@@ -17,6 +17,7 @@ export async function getAppStoreRanking({
 		const res: ResponseAppStoreRanking = {
 			appName: app.title.label,
 			appId: app.id.attributes["im:id"],
+			appIcon: app["im:image"][0].label,
 		};
 
 		return res;
