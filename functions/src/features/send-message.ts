@@ -1,4 +1,4 @@
-import { TextMessage, messagingApi } from "@line/bot-sdk";
+import { type TextMessage, messagingApi } from "@line/bot-sdk";
 import { Env } from "../env";
 
 const client = new messagingApi.MessagingApiClient({

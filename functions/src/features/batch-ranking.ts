@@ -10,34 +10,30 @@ type Props = {
 };
 
 export async function batchRanking(props: Props) {
-	try {
-		const { country, genreId } = props;
+	const { country, genreId } = props;
 
-		const ranking = await getAppStoreRanking({
-			country,
-			genreId,
-			limit: MAX_LIMIT,
-		});
+	const ranking = await getAppStoreRanking({
+		country,
+		genreId,
+		limit: MAX_LIMIT,
+	});
 
-		if (ranking === undefined) {
-			throw new Error(
-				`国:${country} ジャンル:${genreId} - ランキング取得に失敗しました`,
-			);
-		}
-
-		await handleBatchOperation<ResponseAppStoreRanking>({
-			description: `国:${country} ジャンル:${genreId} - ランキング取得`,
-			operation: async (app, index) => {
-				const props: PropUpsertRanking = {
-					country,
-					genreId,
-					rank: index + 1,
-				};
-				await upsertRanking(app, props);
-			},
-			array: ranking,
-		});
-	} catch (error) {
-		throw error;
+	if (ranking === undefined) {
+		throw new Error(
+			`国:${country} ジャンル:${genreId} - ランキング取得に失敗しました`,
+		);
 	}
+
+	await handleBatchOperation<ResponseAppStoreRanking>({
+		description: `国:${country} ジャンル:${genreId} - ランキング取得`,
+		operation: async (app, index) => {
+			const props: PropUpsertRanking = {
+				country,
+				genreId,
+				rank: index + 1,
+			};
+			await upsertRanking(app, props);
+		},
+		array: ranking,
+	});
 }
