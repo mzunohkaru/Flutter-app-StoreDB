@@ -23,7 +23,6 @@ export async function getAppStoreRanking({
 			return res;
 		});
 	} catch (error) {
-		console.error(error);
-		return;
+		throw error;
 	}
 }

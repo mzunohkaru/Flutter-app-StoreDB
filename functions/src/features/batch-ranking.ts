@@ -1,4 +1,3 @@
-import { logger } from "firebase-functions";
 import { MAX_LIMIT } from "../constant";
 import type { ResponseAppStoreRanking } from "../model/ranking";
 import { handleBatchOperation } from "../utils/chunk";
@@ -38,8 +37,7 @@ export async function batchRanking(props: Props) {
 			},
 			array: ranking,
 		});
-		logger.info(`国:${country} ジャンル:${genreId} - ランキング取得完了`);
 	} catch (error) {
-		logger.error("Error: ", error);
+		throw error;
 	}
 }
