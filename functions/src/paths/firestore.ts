@@ -2,11 +2,10 @@ export const FIRESTORE_PATH = {
 	ranking: (
 		country: string,
 		genreId: number,
-		id: number,
+		appId: number,
 		createdAt: string,
-		rank: number,
 	) =>
-		`${country}/${VersionConstant.v1}/${genreId}/${VersionConstant.v1}/${id}/${VersionConstant.v1}/${createdAt}/${rank}`,
+		`${country}/${VersionConstant.v1}/${genreId}/${VersionConstant.v1}/${appId}/${createdAt}`,
 };
 
 export const VersionConstant = {

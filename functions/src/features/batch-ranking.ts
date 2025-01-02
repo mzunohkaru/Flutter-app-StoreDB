@@ -27,12 +27,16 @@ export async function batchRanking(props: Props) {
 	await handleBatchOperation<ResponseAppStoreRanking>({
 		description: `国:${country} ジャンル:${genreId} - ランキング取得`,
 		operation: async (app, index) => {
+			const rank = index + 1;
 			const props: PropUpsertRanking = {
 				country,
 				genreId,
-				rank: index + 1,
 			};
-			await upsertRanking(app, props);
+			const ranking: ResponseAppStoreRanking & { rank: number } = {
+				...app,
+				rank,
+			};
+			await upsertRanking(ranking, props);
 		},
 		array: ranking,
 	});
