@@ -2,6 +2,7 @@ import { MAX_LIMIT } from "../constant";
 import type { ResponseAppStoreRanking } from "../model/ranking";
 import { handleBatchOperation } from "../utils/chunk";
 import { getAppStoreRanking } from "./get-app-store";
+import { upsertApp } from "./upsert-app";
 import { type PropUpsertRanking, upsertRanking } from "./upsert-ranking";
 
 type Props = {
@@ -31,12 +32,10 @@ export async function batchRanking(props: Props) {
 			const props: PropUpsertRanking = {
 				country,
 				genreId,
+				appId: app.appId,
 			};
-			const ranking: ResponseAppStoreRanking & { rank: number } = {
-				...app,
-				rank,
-			};
-			await upsertRanking(ranking, props);
+			await upsertRanking(rank, props);
+			await upsertApp(app, props);
 		},
 		array: ranking,
 	});
