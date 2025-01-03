@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../services/firestore/firestore_document.dart';
 import '../../../services/firestore/firestore_service.dart';
 import '../../enum/firestore.dart';
+import '../../type/app_id.dart';
 import 'ranking.dart';
 
 class RankingDocument extends FirestoreDocument<Ranking> {
@@ -20,7 +21,7 @@ class RankingDocument extends FirestoreDocument<Ranking> {
   static CollectionReference<Map<String, dynamic>> collectionReference({
     required Country country,
     required Genre genre,
-    required String appId,
+    required AppID appId,
   }) =>
       FirestoreService()
           .firestore
@@ -33,7 +34,7 @@ class RankingDocument extends FirestoreDocument<Ranking> {
   static DocumentReference<Map<String, dynamic>> documentReference({
     required Country country,
     required Genre genre,
-    required String appId,
+    required AppID appId,
     required String date,
   }) =>
       collectionReference(

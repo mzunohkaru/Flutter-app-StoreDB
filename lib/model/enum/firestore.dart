@@ -11,7 +11,7 @@ enum Genre {
 
 extension GenreExtension on Genre {
   int get code => {
-    Genre.business: 6005,
+    Genre.business: 6000,
     Genre.socialNetworking: 6005,
     Genre.healthAndFitness: 6012,
   }[this]!;
