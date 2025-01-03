@@ -24,6 +24,20 @@ if (
 
 if (
 	!process.env.FUNCTION_TARGET ||
+	process.env.FUNCTION_TARGET === FUNCTIONS.scheduleAM4
+) {
+	exports.scheduleAM4 = handler.scheduleAM4;
+}
+
+if (
+	!process.env.FUNCTION_TARGET ||
+	process.env.FUNCTION_TARGET === FUNCTIONS.scheduleAM5
+) {
+	exports.scheduleAM5 = handler.scheduleAM5;
+}
+
+if (
+	!process.env.FUNCTION_TARGET ||
 	process.env.FUNCTION_TARGET === FUNCTIONS.schedulePM1
 ) {
 	exports.schedulePM1 = handler.schedulePM1;
