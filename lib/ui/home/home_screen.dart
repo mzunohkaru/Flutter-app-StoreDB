@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               );
             },
-            child: const Text('App List - Social Networking'),
+            child: Text(Genre.socialNetworking.title),
           ),
           ElevatedButton(
             onPressed: () {
@@ -37,7 +37,19 @@ class HomeScreen extends StatelessWidget {
                 ),
               );
             },
-            child: const Text('App List - Business'),
+            child: Text(Genre.business.title),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      AppListScreen(genre: Genre.healthAndFitness),
+                ),
+              );
+            },
+            child: Text(Genre.healthAndFitness.title),
           ),
         ],
       ),
