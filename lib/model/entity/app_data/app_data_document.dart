@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../services/firestore/firestore_document.dart';
 import '../../../services/firestore/firestore_service.dart';
 import '../../enum/firestore.dart';
+import '../../type/app_id.dart';
 import 'app_data.dart';
 
 class AppDataDocument extends FirestoreDocument<AppData> {
@@ -30,7 +31,7 @@ class AppDataDocument extends FirestoreDocument<AppData> {
   static DocumentReference<Map<String, dynamic>> documentReference({
     required Country country,
     required Genre genre,
-    required String appId,
+    required AppID appId,
   }) =>
       collectionReference(
         country: country,
