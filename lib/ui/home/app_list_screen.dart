@@ -1,9 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../model/enum/firestore.dart';
-import '../../repository/ranking_repository/ranking_repository_impl.dart';
 import '../../state/app_data_state/app_data_controller.dart';
+import '../chart/chart_screen.dart';
 
 class AppListScreen extends ConsumerWidget {
   const AppListScreen({super.key, required this.genre});
@@ -24,22 +25,24 @@ class AppListScreen extends ConsumerWidget {
             itemBuilder: (context, index) {
               final app = state.appDataDocList[index];
               return ListTile(
-                leading: Image.network(app.entity.appIcon),
+                leading: CachedNetworkImage(
+                  imageUrl: app.entity.appIcon,
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
+                ),
                 title: Text(app.entity.appName),
-                onTap: () async {
-                  try {
-                    print(app.ref.id);
-                    final list =
-                        await ref.read(rankingRepositoryProvider).fetchDoc(
-                              country: Country.jp,
-                              genre: genre,
-                              appId: app.ref.id,
-                              date: "20250103",
-                            );
-                    print(list.entity.rank.toString());
-                  } catch (e) {
-                    print(e);
-                  }
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChartScreen(
+                        appDataDoc: app,
+                        genre: genre,
+                      ),
+                    ),
+                  );
                 },
               );
             },
