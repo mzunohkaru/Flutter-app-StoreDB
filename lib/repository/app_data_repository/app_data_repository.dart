@@ -1,18 +1,16 @@
-import '../../model/entity/ranking/ranking_document.dart';
+import '../../model/entity/app_data/app_data_document.dart';
 import '../../model/enum/firestore.dart';
 import '../../model/type/app_id.dart';
 
-  abstract class RankingRepository {
-  Future<RankingDocument> fetchDoc({
+abstract class AppDataRepository {
+  Future<AppDataDocument> fetchDoc({
     required Country country,
     required Genre genre,
     required AppID appId,
-    required String date,
   });
 
-  Future<List<RankingDocument>> fetchList({
+  Future<List<AppDataDocument>> fetchDocList({
     required Country country,
     required Genre genre,
-    required AppID appId,
   });
 }

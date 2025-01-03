@@ -6,8 +6,7 @@ part 'ranking.g.dart';
 @freezed
 class Ranking with _$Ranking {
   const factory Ranking({
-    required String appId,
-    required String appName,
+    required int rank,
   }) = _Ranking;
 
   factory Ranking.fromJson(Map<String, dynamic> json) =>
