@@ -1,24 +1,23 @@
 import { db } from "../config/firebase";
-import type { ResponseAppStoreRanking } from "../model/ranking";
 import { FIRESTORE_PATH } from "../paths/firestore";
 
 export type PropUpsertRanking = {
 	country: string;
 	genreId: number;
-	rank: number;
+	appId: number;
 };
 
-export async function upsertRanking(
-	ranking: ResponseAppStoreRanking,
-	props: PropUpsertRanking,
-) {
-	const { country, genreId, rank } = props;
+export async function upsertRanking(rank: number, props: PropUpsertRanking) {
+	const { country, genreId, appId } = props;
 	const createdAt = new Date().toISOString().slice(0, 10).replace(/-/g, "");
 	await db
-		.doc(
-			FIRESTORE_PATH.ranking(country, genreId, ranking.appId, createdAt, rank),
+		.doc(FIRESTORE_PATH.ranking(country, genreId, appId, createdAt))
+		.set(
+			{
+				rank,
+			},
+			{ merge: true },
 		)
-		.set(ranking, { merge: true })
 		.catch((error) => {
 			throw error;
 		});

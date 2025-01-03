@@ -16,10 +16,10 @@ export const FUNCTIONS = {
 } as const;
 
 export const SCHEDULE = {
-	am1: "0 1 * * *",
-	am2: "0 2 * * *",
-	am3: "0 3 * * *",
-	pm1: "0 12 * * *",
+	am1: "0 1 */2 * *",
+	am2: "0 2 */2 * *",
+	am3: "0 3 */2 * *",
+	pm1: "0 12 */2 * *",
 } as const;
 
 export const ErrorMessage = (country: string, genreId: number) =>
