@@ -1,11 +1,13 @@
 export const FIRESTORE_PATH = {
+	app: (country: string, genreId: number, appId: number) =>
+		`${country}/${VersionConstant.v1}/${genreId}/${appId}`,
 	ranking: (
 		country: string,
 		genreId: number,
 		appId: number,
 		createdAt: string,
 	) =>
-		`${country}/${VersionConstant.v1}/${genreId}/${VersionConstant.v1}/${appId}/${createdAt}`,
+		`${country}/${VersionConstant.v1}/${genreId}/${appId}/ranking/${createdAt}`,
 };
 
 export const VersionConstant = {
