@@ -1,5 +1,5 @@
 import { db } from "../config/firebase";
-import { AppData } from "../model/app-data";
+import type { AppData } from "../model/app-data";
 import type { ResponseAppStoreRanking } from "../model/ranking";
 import { FIRESTORE_PATH } from "../paths/firestore";
 
