@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../model/enum/firestore.dart';
 import '../../state/app_data_state/app_data_controller.dart';
-import '../chart/chart_screen.dart';
 
 class AppListScreen extends ConsumerWidget {
   const AppListScreen({super.key, required this.genre});
@@ -29,19 +29,13 @@ class AppListScreen extends ConsumerWidget {
                   imageUrl: app.entity.appIcon,
                   placeholder: (context, url) =>
                       const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) =>
-                      const Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
                 title: Text(app.entity.appName),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChartScreen(
-                        appDataDoc: app,
-                        genre: genre,
-                      ),
-                    ),
+                  context.go(
+                    '/appList/${genre.name}/chart',
+                    extra: app,
                   );
                 },
               );

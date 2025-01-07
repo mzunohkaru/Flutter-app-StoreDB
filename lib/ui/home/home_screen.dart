@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../model/enum/firestore.dart';
-import 'app_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -18,38 +18,48 @@ class HomeScreen extends StatelessWidget {
         children: [
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      AppListScreen(genre: Genre.socialNetworking),
-                ),
-              );
+              if (!context.mounted) {
+                return;
+              }
+              context.go('/appList/${Genre.socialNetworking.name}');
             },
             child: Text(Genre.socialNetworking.title),
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AppListScreen(genre: Genre.business),
-                ),
-              );
+              if (!context.mounted) {
+                return;
+              }
+              context.go('/appList/${Genre.business.name}');
             },
             child: Text(Genre.business.title),
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      AppListScreen(genre: Genre.healthAndFitness),
-                ),
-              );
+              if (!context.mounted) {
+                return;
+              }
+              context.go('/appList/${Genre.healthAndFitness.name}');
             },
             child: Text(Genre.healthAndFitness.title),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (!context.mounted) {
+                return;
+              }
+              context.go('/appList/${Genre.lifeStyle.name}');
+            },
+            child: Text(Genre.lifeStyle.title),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (!context.mounted) {
+                return;
+              }
+              context.go('/appList/${Genre.travel.name}');
+            },
+            child: Text(Genre.travel.title),
           ),
         ],
       ),
