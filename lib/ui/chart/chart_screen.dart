@@ -8,6 +8,7 @@ import '../../model/entity/app_data/app_data_document.dart';
 import '../../model/enum/calender_type.dart';
 import '../../model/enum/firestore.dart';
 import '../../state/ranking_state/ranking_controller.dart';
+import '../app_list/widget/app_list_widget.dart';
 import 'widget/drop_down_button_widget.dart';
 import 'widget/liner_chart_widget.dart';
 
@@ -56,46 +57,58 @@ class ChartScreen extends HookConsumerWidget {
           ),
         ],
       ),
-      body: AspectRatio(
-        aspectRatio: 1,
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              spacing: 16,
+      body: Column(
+        children: [
+          AspectRatio(
+            aspectRatio: 1,
+            child: Stack(
               children: [
-                ListTile(
-                  leading: CachedNetworkImage(
-                    imageUrl: appDataDoc.entity.appIcon,
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                  ),
-                  title: Text(
-                    '${appDataDoc.entity.appName}',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 2,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  spacing: 16,
+                  children: [
+                    ListTile(
+                      leading: CachedNetworkImage(
+                        imageUrl: appDataDoc.entity.appIcon,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
+                      title: Text(
+                        '${appDataDoc.entity.appName}',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 12),
-                    child: LineChartWidget(
-                      spots: spots,
-                      calenderType: calenderType.value,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 12),
+                        child: LineChartWidget(
+                          spots: spots,
+                          calenderType: calenderType.value,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+          Expanded(
+            child: AppListWidget(
+              genre: genre,
+              onTap: (app) {
+                print(app.entity.appName);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
