@@ -12,6 +12,8 @@ export const FUNCTIONS = {
 	scheduleAM1: "scheduleAM1",
 	scheduleAM2: "scheduleAM2",
 	scheduleAM3: "scheduleAM3",
+	scheduleAM4: "scheduleAM4",
+	scheduleAM5: "scheduleAM5",
 	schedulePM1: "schedulePM1",
 } as const;
 
@@ -19,6 +21,8 @@ export const SCHEDULE = {
 	am1: "0 1 */2 * *",
 	am2: "0 2 */2 * *",
 	am3: "0 3 */2 * *",
+	am4: "0 4 */2 * *",
+	am5: "0 5 */2 * *",
 	pm1: "0 12 */2 * *",
 } as const;
 
