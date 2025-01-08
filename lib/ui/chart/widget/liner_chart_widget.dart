@@ -327,39 +327,4 @@ class LineChartWidget extends StatelessWidget {
         belowBarData: BarAreaData(show: false),
         spots: spots,
       );
-
-  // List<FlSpot> get spot_1 => [
-  //       FlSpot(1, 10),
-  //       FlSpot(3, 12),
-  //       FlSpot(5, 14),
-  //       FlSpot(7, 34),
-  //       FlSpot(10, 20),
-  //       FlSpot(12, 22),
-  //     ];
-
-  // List<FlSpot> get spot_2 => [
-  //       FlSpot(1, 38),
-  //       FlSpot(3, 19),
-  //       FlSpot(6, 5),
-  //       FlSpot(10, 33),
-  //     ];
-
-  // List<FlSpot> get spot_3 => [
-  //       FlSpot(1, 15),
-  //       FlSpot(6, 25),
-  //       FlSpot(12, 38),
-  //     ];
-
-  // LineChartBarData get lineChartBarData2_1 => lineChartBarData(
-  //       spots: spot_1,
-  //       color: Colors.cyan.withValues(alpha: 0.5),
-  //     );
-  // LineChartBarData get lineChartBarData2_2 => lineChartBarData(
-  //       spots: spot_2,
-  //       color: Colors.cyan.withValues(alpha: 0.5),
-  //     );
-  // LineChartBarData get lineChartBarData2_3 => lineChartBarData(
-  //       spots: spot_3,
-  //       color: Colors.cyan.withValues(alpha: 0.5),
-  //     );
 }
