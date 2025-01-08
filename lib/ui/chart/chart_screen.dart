@@ -36,13 +36,23 @@ class ChartScreen extends HookConsumerWidget {
       );
     }
 
-    final spots =
-        rankingState.value!.rankingDocList.asMap().entries.map((entry) {
-      return FlSpot(
-        entry.key.toDouble() + 1,
-        entry.value.entity.rank.toDouble(),
-      );
-    }).toList();
+    final spots = rankingState.value!.rankingDocList
+        .map((d) {
+          final date = d.ref.id;
+          final year = int.parse(date.substring(2, 4));
+          if (year != 25) {
+            return null;
+          }
+          final month = int.parse(date.substring(4, 6));
+          final day = int.parse(date.substring(6, 8));
+          final xValue = month.toDouble() + (day / 100);
+          return FlSpot(
+            xValue,
+            d.entity.rank.toDouble(),
+          );
+        })
+        .whereType<FlSpot>()
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
