@@ -35,10 +35,3 @@ if (
 ) {
 	exports.scheduleAM5 = handler.scheduleAM5;
 }
-
-if (
-	!process.env.FUNCTION_TARGET ||
-	process.env.FUNCTION_TARGET === FUNCTIONS.schedulePM1
-) {
-	exports.schedulePM1 = handler.schedulePM1;
-}

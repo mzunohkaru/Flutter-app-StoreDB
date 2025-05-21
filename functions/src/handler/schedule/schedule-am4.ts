@@ -7,9 +7,10 @@ import {
 	SCHEDULE,
 } from "../../constant";
 import { batchRanking, sendMessage } from "../../features";
-import { APP_STORE_COUNTRY, APP_STORE_URL } from "../../config/app-store";
+import { APP_STORE_COUNTRY, APP_STORE_GENRE } from "../../config/app-store";
+import { logger } from "firebase-functions";
 
-//* JP
+//* CHINA
 //* Life Style
 
 export const scheduleAM4 = onSchedule(
@@ -21,10 +22,13 @@ export const scheduleAM4 = onSchedule(
 	},
 	async () => {
 		await batchRanking({
-			country: APP_STORE_COUNTRY.jp,
-			genreId: APP_STORE_URL.lifeStyle,
-		}).catch((_) => {
-			sendMessage(ErrorMessage(APP_STORE_COUNTRY.jp, APP_STORE_URL.lifeStyle));
+			country: APP_STORE_COUNTRY.china,
+			genreId: APP_STORE_GENRE.lifeStyle,
+		}).catch((e) => {
+			logger.error(e);
+			sendMessage(
+				ErrorMessage(APP_STORE_COUNTRY.china, APP_STORE_GENRE.lifeStyle),
+			);
 		});
 	},
 );
