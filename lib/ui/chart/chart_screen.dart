@@ -107,7 +107,6 @@ ChartDataResult generateChartData({
   return (spots: newSpots, startDate: startDate);
 }
 
-
 class ChartScreen extends HookConsumerWidget {
   const ChartScreen({super.key, required this.appDataDoc, required this.genre});
 
@@ -142,7 +141,6 @@ class ChartScreen extends HookConsumerWidget {
     );
     final spots = chartDataResult.spots;
     final startDate = chartDataResult.startDate;
-
 
     return Scaffold(
       appBar: AppBar(
@@ -192,7 +190,8 @@ class ChartScreen extends HookConsumerWidget {
                         child: LineChartWidget(
                           spots: spots, // Use spots from chartDataResult
                           calenderType: calenderType.value,
-                          startDate: startDate, // Use startDate from chartDataResult
+                          startDate:
+                              startDate, // Use startDate from chartDataResult
                         ),
                       ),
                     ),
