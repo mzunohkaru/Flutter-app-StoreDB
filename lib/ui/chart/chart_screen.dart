@@ -73,9 +73,13 @@ ChartDataResult generateChartData({
   required DateTime now,
   required List<_ChartRankingData> rankingData,
 }) {
+  // 1. Sort rankingData by dateId
+  rankingData.sort((a, b) => a.dateId.compareTo(b.dateId));
+
   DateTime startDate;
   DateTime endDate;
 
+  // Determine startDate and endDate based on calenderType
   switch (calenderType) {
     case CalenderType.c2w:
       startDate = now.subtract(const Duration(days: 13));
@@ -92,19 +96,49 @@ ChartDataResult generateChartData({
   }
 
   final newSpots = <FlSpot>[];
-  final rankingMap = {for (var data in rankingData) data.dateId: data.rank};
 
-  for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
-    final currentDate = startDate.add(Duration(days: i));
-    final formattedDate = DateFormat('yyyyMMdd').format(currentDate);
-    final rank = rankingMap[formattedDate];
+  // 改善されたパース方法
+  DateTime? parseYYYYMMDD(String dateString) {
+    if (dateString.length != 8) {
+      print('Invalid date format length: $dateString');
+      return null;
+    }
 
-    if (rank != null) {
-      newSpots.add(FlSpot(i.toDouble(), rank.toDouble()));
-    } else {
-      newSpots.add(FlSpot.nullSpot);
+    try {
+      final year = int.parse(dateString.substring(0, 4));
+      final month = int.parse(dateString.substring(4, 6));
+      final day = int.parse(dateString.substring(6, 8));
+
+      // 値の検証
+      if (month < 1 || month > 12) {
+        return null;
+      }
+      if (day < 1 || day > 31) {
+        return null;
+      }
+
+      return DateTime(year, month, day);
+    } catch (e) {
+      print('Error parsing date components: $dateString - $e');
+      return null;
     }
   }
+
+  // Loop through sorted rankingData
+  for (final data in rankingData) {
+    final currentDate = parseYYYYMMDD(data.dateId);
+
+    if (currentDate != null) {
+      // Check if the date is within the startDate and endDate range
+      if (!currentDate.isBefore(startDate) && !currentDate.isAfter(endDate)) {
+        // Calculate the difference in days from startDate
+        final xValue = currentDate.difference(startDate).inDays.toDouble();
+        final yValue = data.rank.toDouble();
+        newSpots.add(FlSpot(xValue, yValue));
+      }
+    }
+  }
+
   return (spots: newSpots, startDate: startDate);
 }
 
