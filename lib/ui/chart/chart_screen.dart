@@ -96,13 +96,39 @@ ChartDataResult generateChartData({
   }
 
   final newSpots = <FlSpot>[];
-  final dateFormat = DateFormat('yyyyMMdd');
+
+  // 改善されたパース方法
+  DateTime? parseYYYYMMDD(String dateString) {
+    if (dateString.length != 8) {
+      print('Invalid date format length: $dateString');
+      return null;
+    }
+
+    try {
+      final year = int.parse(dateString.substring(0, 4));
+      final month = int.parse(dateString.substring(4, 6));
+      final day = int.parse(dateString.substring(6, 8));
+
+      // 値の検証
+      if (month < 1 || month > 12) {
+        return null;
+      }
+      if (day < 1 || day > 31) {
+        return null;
+      }
+
+      return DateTime(year, month, day);
+    } catch (e) {
+      print('Error parsing date components: $dateString - $e');
+      return null;
+    }
+  }
 
   // Loop through sorted rankingData
   for (final data in rankingData) {
-    try {
-      final currentDate = dateFormat.parse(data.dateId);
+    final currentDate = parseYYYYMMDD(data.dateId);
 
+    if (currentDate != null) {
       // Check if the date is within the startDate and endDate range
       if (!currentDate.isBefore(startDate) && !currentDate.isAfter(endDate)) {
         // Calculate the difference in days from startDate
@@ -110,9 +136,6 @@ ChartDataResult generateChartData({
         final yValue = data.rank.toDouble();
         newSpots.add(FlSpot(xValue, yValue));
       }
-    } catch (e) {
-      // Handle potential date parsing errors, though dateId should be 'yyyyMMdd'
-      print('Error parsing date: ${data.dateId} - $e');
     }
   }
 

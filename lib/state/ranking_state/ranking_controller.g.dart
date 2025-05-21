@@ -6,7 +6,7 @@ part of 'ranking_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$rankingControllerHash() => r'e55c658cfafd5fd98f1eda9cd6ef2d6cccf631a0';
+String _$rankingControllerHash() => r'4d2c4e0f67a4bc2ea144a6c13c048f9b0f120d3c';
 
 /// Copied from Dart SDK
 class _SystemHash {
