@@ -7,9 +7,10 @@ import {
 	SCHEDULE,
 } from "../../constant";
 import { batchRanking, sendMessage } from "../../features";
-import { APP_STORE_COUNTRY, APP_STORE_URL } from "../../config/app-store";
+import { APP_STORE_COUNTRY, APP_STORE_GENRE } from "../../config/app-store";
+import { logger } from "firebase-functions";
 
-//* JP
+//* CHINA
 //* Social Networking
 
 export const scheduleAM1 = onSchedule(
@@ -21,15 +22,19 @@ export const scheduleAM1 = onSchedule(
 	},
 	async () => {
 		await batchRanking({
-			country: APP_STORE_COUNTRY.jp,
-			genreId: APP_STORE_URL.socialNetworking,
+			country: APP_STORE_COUNTRY.china,
+			genreId: APP_STORE_GENRE.socialNetworking,
 		})
 			.then((_) => {
 				sendMessage("ランキング取得完了");
 			})
-			.catch((_) => {
+			.catch((e) => {
+				logger.error(e);
 				sendMessage(
-					ErrorMessage(APP_STORE_COUNTRY.jp, APP_STORE_URL.socialNetworking),
+					ErrorMessage(
+						APP_STORE_COUNTRY.china,
+						APP_STORE_GENRE.socialNetworking,
+					),
 				);
 			});
 	},

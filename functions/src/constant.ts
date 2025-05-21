@@ -23,7 +23,6 @@ export const SCHEDULE = {
 	am3: "0 3 */2 * *",
 	am4: "0 4 */2 * *",
 	am5: "0 5 */2 * *",
-	pm1: "0 12 */2 * *",
 } as const;
 
 export const ErrorMessage = (country: string, genreId: number) =>
