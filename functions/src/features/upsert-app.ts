@@ -17,6 +17,7 @@ export async function upsertApp(
 	const appData: AppData = {
 		appName: app.appName,
 		appIcon: app.appIcon,
+		appUrl: app.appUrl,
 	};
 	await db
 		.doc(FIRESTORE_PATH.app(country, genreId, appId))
