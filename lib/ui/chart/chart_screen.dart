@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../model/entity/app_data/app_data_document.dart';
 import '../../model/enum/calender_type.dart';
 import '../../model/enum/genre.dart';
+import '../../services/url_launch/url_launch.dart';
 import '../../state/ranking_state/ranking_controller.dart';
 import '../app_list/widget/app_list_widget.dart';
 import 'widget/drop_down_button_widget.dart';
@@ -173,15 +174,20 @@ class ChartScreen extends HookConsumerWidget {
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
                       ),
-                      title: Text(
-                        '${appDataDoc.entity.appName}',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
+                      title: GestureDetector(
+                        onTap: () {
+                          UrlLaunchClient().accessUrl(appDataDoc.entity.appUrl);
+                        },
+                        child: Text(
+                          '${appDataDoc.entity.appName}',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
                     Expanded(
