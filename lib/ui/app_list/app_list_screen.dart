@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../model/enum/firestore.dart';
+import '../../model/enum/genre.dart';
 import 'widget/app_list_widget.dart';
 
 class AppListScreen extends StatelessWidget {

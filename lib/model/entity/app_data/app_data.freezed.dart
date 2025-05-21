@@ -22,6 +22,7 @@ AppData _$AppDataFromJson(Map<String, dynamic> json) {
 mixin _$AppData {
   String get appName => throw _privateConstructorUsedError;
   String get appIcon => throw _privateConstructorUsedError;
+  String get appUrl => throw _privateConstructorUsedError;
 
   /// Serializes this AppData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +38,7 @@ abstract class $AppDataCopyWith<$Res> {
   factory $AppDataCopyWith(AppData value, $Res Function(AppData) then) =
       _$AppDataCopyWithImpl<$Res, AppData>;
   @useResult
-  $Res call({String appName, String appIcon});
+  $Res call({String appName, String appIcon, String appUrl});
 }
 
 /// @nodoc
@@ -57,6 +58,7 @@ class _$AppDataCopyWithImpl<$Res, $Val extends AppData>
   $Res call({
     Object? appName = null,
     Object? appIcon = null,
+    Object? appUrl = null,
   }) {
     return _then(_value.copyWith(
       appName: null == appName
@@ -66,6 +68,10 @@ class _$AppDataCopyWithImpl<$Res, $Val extends AppData>
       appIcon: null == appIcon
           ? _value.appIcon
           : appIcon // ignore: cast_nullable_to_non_nullable
+              as String,
+      appUrl: null == appUrl
+          ? _value.appUrl
+          : appUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -78,7 +84,7 @@ abstract class _$$AppDataImplCopyWith<$Res> implements $AppDataCopyWith<$Res> {
       __$$AppDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String appName, String appIcon});
+  $Res call({String appName, String appIcon, String appUrl});
 }
 
 /// @nodoc
@@ -96,6 +102,7 @@ class __$$AppDataImplCopyWithImpl<$Res>
   $Res call({
     Object? appName = null,
     Object? appIcon = null,
+    Object? appUrl = null,
   }) {
     return _then(_$AppDataImpl(
       appName: null == appName
@@ -106,6 +113,10 @@ class __$$AppDataImplCopyWithImpl<$Res>
           ? _value.appIcon
           : appIcon // ignore: cast_nullable_to_non_nullable
               as String,
+      appUrl: null == appUrl
+          ? _value.appUrl
+          : appUrl // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -113,7 +124,8 @@ class __$$AppDataImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AppDataImpl extends _AppData {
-  const _$AppDataImpl({required this.appName, required this.appIcon})
+  const _$AppDataImpl(
+      {required this.appName, required this.appIcon, required this.appUrl})
       : super._();
 
   factory _$AppDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -123,10 +135,12 @@ class _$AppDataImpl extends _AppData {
   final String appName;
   @override
   final String appIcon;
+  @override
+  final String appUrl;
 
   @override
   String toString() {
-    return 'AppData(appName: $appName, appIcon: $appIcon)';
+    return 'AppData(appName: $appName, appIcon: $appIcon, appUrl: $appUrl)';
   }
 
   @override
@@ -135,12 +149,13 @@ class _$AppDataImpl extends _AppData {
         (other.runtimeType == runtimeType &&
             other is _$AppDataImpl &&
             (identical(other.appName, appName) || other.appName == appName) &&
-            (identical(other.appIcon, appIcon) || other.appIcon == appIcon));
+            (identical(other.appIcon, appIcon) || other.appIcon == appIcon) &&
+            (identical(other.appUrl, appUrl) || other.appUrl == appUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, appName, appIcon);
+  int get hashCode => Object.hash(runtimeType, appName, appIcon, appUrl);
 
   /// Create a copy of AppData
   /// with the given fields replaced by the non-null parameter values.
@@ -161,7 +176,8 @@ class _$AppDataImpl extends _AppData {
 abstract class _AppData extends AppData {
   const factory _AppData(
       {required final String appName,
-      required final String appIcon}) = _$AppDataImpl;
+      required final String appIcon,
+      required final String appUrl}) = _$AppDataImpl;
   const _AppData._() : super._();
 
   factory _AppData.fromJson(Map<String, dynamic> json) = _$AppDataImpl.fromJson;
@@ -170,6 +186,8 @@ abstract class _AppData extends AppData {
   String get appName;
   @override
   String get appIcon;
+  @override
+  String get appUrl;
 
   /// Create a copy of AppData
   /// with the given fields replaced by the non-null parameter values.

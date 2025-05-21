@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../model/entity/app_data/app_data_document.dart';
 import '../../model/enum/calender_type.dart';
-import '../../model/enum/firestore.dart';
+import '../../model/enum/genre.dart';
 import '../../state/ranking_state/ranking_controller.dart';
 import '../app_list/widget/app_list_widget.dart';
 import 'widget/drop_down_button_widget.dart';

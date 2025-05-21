@@ -12,6 +12,10 @@ class LineChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (spots.isEmpty) {
+      return const Center(child: Text('データがありません'));
+    }
+
     return LineChart(
       sampleData,
       duration: const Duration(milliseconds: 250),
@@ -24,8 +28,8 @@ class LineChartWidget extends StatelessWidget {
         titlesData: titlesData,
         borderData: borderData,
         lineBarsData: lineBarsData,
-        minX: spots.first.x,
-        maxX: spots.last.x,
+        minX: spots.isNotEmpty ? spots.first.x : 0,
+        maxX: spots.isNotEmpty ? spots.last.x : 0,
         minY: 1,
         maxY: 100,
       );
@@ -115,7 +119,9 @@ class LineChartWidget extends StatelessWidget {
   SideTitles get bottomTitles => SideTitles(
         showTitles: true,
         reservedSize: 32,
-        interval: (spots.last.x - spots.first.x) / 5,
+        interval: (spots.last.x - spots.first.x) / 5 <= 0
+            ? 1
+            : (spots.last.x - spots.first.x) / 5,
         getTitlesWidget: (value, meta) =>
             bottomTitleWidgets(calenderType, value, meta),
       );

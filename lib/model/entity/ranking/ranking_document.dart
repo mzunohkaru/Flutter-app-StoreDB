@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../services/firestore/firestore_document.dart';
 import '../../../services/firestore/firestore_service.dart';
-import '../../enum/firestore.dart';
+import '../../enum/country.dart';
+import '../../enum/genre.dart';
 import '../../type/app_id.dart';
 import 'ranking.dart';
 

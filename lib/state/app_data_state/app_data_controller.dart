@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../exception/app_exception.dart';
-import '../../model/enum/firestore.dart';
+import '../../model/enum/country.dart';
+import '../../model/enum/genre.dart';
 import '../../repository/app_data_repository/app_data_repository_impl.dart';
 import 'app_data_state.dart';
 
@@ -24,7 +25,7 @@ class AppDataController extends _$AppDataController {
     try {
       final appDataDocList = await ref
           .read(appDataRepositoryProvider)
-          .fetchDocList(country: Country.jp, genre: genre);
+          .fetchDocList(country: Country.cn, genre: genre);
 
       return AppDataState(
         appDataDocList: appDataDocList,

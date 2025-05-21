@@ -1,5 +1,6 @@
 import '../../model/entity/ranking/ranking_document.dart';
-import '../../model/enum/firestore.dart';
+import '../../model/enum/country.dart';
+import '../../model/enum/genre.dart';
 import '../../model/type/app_id.dart';
 
   abstract class RankingRepository {

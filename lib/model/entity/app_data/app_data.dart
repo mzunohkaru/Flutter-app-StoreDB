@@ -8,6 +8,7 @@ class AppData with _$AppData {
   const factory AppData({
     required String appName,
     required String appIcon,
+    required String appUrl,
   }) = _AppData;
 
   factory AppData.fromJson(Map<String, dynamic> json) =>

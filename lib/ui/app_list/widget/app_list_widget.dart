@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../model/entity/app_data/app_data_document.dart';
-import '../../../model/enum/firestore.dart';
+import '../../../model/enum/genre.dart';
 import '../../../state/app_data_state/app_data_controller.dart';
 
 class AppListWidget extends ConsumerWidget {

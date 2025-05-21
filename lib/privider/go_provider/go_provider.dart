@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../model/entity/app_data/app_data_document.dart';
 import '../../model/enum/app_router.dart';
-import '../../model/enum/firestore.dart';
+import '../../model/enum/genre.dart';
 import '../../ui/chart/chart_screen.dart';
 import '../../ui/app_list/app_list_screen.dart';
 import '../../ui/home/home_screen.dart';

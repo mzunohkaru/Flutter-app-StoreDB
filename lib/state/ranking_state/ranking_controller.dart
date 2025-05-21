@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../exception/app_exception.dart';
-import '../../model/enum/firestore.dart';
+import '../../model/enum/country.dart';
+import '../../model/enum/genre.dart';
 import '../../repository/ranking_repository/ranking_repository_impl.dart';
 import 'ranking_state.dart';
 
@@ -26,7 +27,7 @@ class RankingController extends _$RankingController {
     try {
       final rankingDocList = await ref
           .read(rankingRepositoryProvider)
-          .fetchList(country: Country.jp, genre: genre, appId: appId);
+          .fetchList(country: Country.cn, genre: genre, appId: appId);
 
       return RankingState(
         rankingDocList: rankingDocList,
