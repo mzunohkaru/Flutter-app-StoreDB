@@ -73,9 +73,13 @@ ChartDataResult generateChartData({
   required DateTime now,
   required List<_ChartRankingData> rankingData,
 }) {
+  // 1. Sort rankingData by dateId
+  rankingData.sort((a, b) => a.dateId.compareTo(b.dateId));
+
   DateTime startDate;
   DateTime endDate;
 
+  // Determine startDate and endDate based on calenderType
   switch (calenderType) {
     case CalenderType.c2w:
       startDate = now.subtract(const Duration(days: 13));
@@ -92,19 +96,26 @@ ChartDataResult generateChartData({
   }
 
   final newSpots = <FlSpot>[];
-  final rankingMap = {for (var data in rankingData) data.dateId: data.rank};
+  final dateFormat = DateFormat('yyyyMMdd');
 
-  for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
-    final currentDate = startDate.add(Duration(days: i));
-    final formattedDate = DateFormat('yyyyMMdd').format(currentDate);
-    final rank = rankingMap[formattedDate];
+  // Loop through sorted rankingData
+  for (final data in rankingData) {
+    try {
+      final currentDate = dateFormat.parse(data.dateId);
 
-    if (rank != null) {
-      newSpots.add(FlSpot(i.toDouble(), rank.toDouble()));
-    } else {
-      newSpots.add(FlSpot.nullSpot);
+      // Check if the date is within the startDate and endDate range
+      if (!currentDate.isBefore(startDate) && !currentDate.isAfter(endDate)) {
+        // Calculate the difference in days from startDate
+        final xValue = currentDate.difference(startDate).inDays.toDouble();
+        final yValue = data.rank.toDouble();
+        newSpots.add(FlSpot(xValue, yValue));
+      }
+    } catch (e) {
+      // Handle potential date parsing errors, though dateId should be 'yyyyMMdd'
+      print('Error parsing date: ${data.dateId} - $e');
     }
   }
+
   return (spots: newSpots, startDate: startDate);
 }
 

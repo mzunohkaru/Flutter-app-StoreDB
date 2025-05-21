@@ -28,33 +28,43 @@ class LineChartWidget extends StatelessWidget {
   }
 
   LineChartData get sampleData {
-    final validSpots = spots.where((spot) => spot != FlSpot.nullSpot).toList();
+    double minX = 0.0;
+    double maxX;
 
-    // Determine minX and maxX based on validSpots
-    double minX = 0;
-    double maxX = 10; // Default if no valid spots, adjust as needed
+    // Calculate maxX based on calenderType and startDate
+    // This logic should mirror the calculation in generateChartData for consistency.
+    switch (calenderType) {
+      case CalenderType.c2w:
+        // Duration is 14 days, so 0 to 13.
+        maxX = 13.0;
+        break;
+      case CalenderType.c1m:
+        // Number of days in the month of startDate.
+        // The x values range from 0 to (daysInMonth - 1).
+        final daysInMonth =
+            DateTime(startDate.year, startDate.month + 1, 0).day;
+        maxX = (daysInMonth - 1).toDouble();
+        break;
+      case CalenderType.c1y:
+        // Number of days in the year of startDate.
+        // The x values range from 0 to (daysInYear - 1).
+        final lastDayOfYear = DateTime(startDate.year, 12, 31);
+        final firstDayOfYear = DateTime(startDate.year, 1, 1);
+        maxX = lastDayOfYear.difference(firstDayOfYear).inDays.toDouble();
+        break;
+    }
+    // Ensure maxX is always greater than minX, even if startDate is at the end of a period
+    // or if the period is very short.
+     if (maxX <= minX && spots.isNotEmpty) { // If spots exist, maxX should be at least spots.last.x or period length
+        // Heuristic: if spots are present, ensure maxX can accommodate them.
+        // However, the primary logic is period-based.
+        // If spots go beyond calculated maxX (should not happen with correct generateChartData),
+        // this might need adjustment, but ideally generateChartData ensures spots are within 0 to maxX.
+        maxX = minX + 1; // Fallback to ensure chart can render.
+    } else if (maxX <= minX) {
+        maxX = minX + 1; // Default fallback for empty spots or very short periods
+    }
 
-    if (validSpots.isNotEmpty) {
-      minX = validSpots.first.x; // Assumes spots are sorted by x before filtering
-      maxX = validSpots.last.x;  // Assumes spots are sorted by x before filtering
-      // Ensure maxX is greater than minX, if only one valid spot, make maxX slightly larger
-      if (maxX <= minX) {
-        maxX = minX + 1; 
-      }
-    } else if (spots.isNotEmpty) {
-      // All spots are FlSpot.nullSpot
-      // Default range based on the total number of spots (days in period)
-      minX = 0;
-      maxX = spots.length.toDouble() -1; 
-      if (maxX < minX) { // handles spots.length == 1 (all null)
-        maxX = minX +1; 
-      }
-    }
-    // If spots itself is empty, build() method returns early.
-    // Final safety check if above logic results in maxX <= minX (e.g. spots.length == 0 somehow bypassed build check)
-    if (maxX <= minX) {
-        maxX = minX + 1;
-    }
 
     return LineChartData(
       lineTouchData: lineTouchData,
@@ -64,8 +74,8 @@ class LineChartWidget extends StatelessWidget {
       lineBarsData: lineBarsData,
       minX: minX,
       maxX: maxX,
-      minY: 1,
-      maxY: 100,
+      minY: 1, // Assuming rank is always >= 1
+      maxY: 100, // Assuming rank is always <= 100
     );
   }
 
@@ -173,45 +183,31 @@ class LineChartWidget extends StatelessWidget {
   }
 
   double get _bottomTitlesInterval {
-    final validSpots = spots.where((spot) => spot.y != null && spot != FlSpot.nullSpot).toList();
-    if (validSpots.isEmpty) {
-      return 1;
-    }
-    // Ensure spots are sorted by x if not already guaranteed
-    // validSpots.sort((a, b) => a.x.compareTo(b.x));
-    
-    double minX = double.maxFinite;
-    double maxX = double.minPositive;
-
-    for (final spot in validSpots) {
-      if (spot.x < minX) minX = spot.x;
-      if (spot.x > maxX) maxX = spot.x;
-    }
-
-    if (minX == double.maxFinite || maxX == double.minPositive) return 1; // no valid spots found
-
-    final xRange = maxX - minX;
-
-    if (xRange <= 0) {
-      return 1;
-    }
+    double minValX = 0.0;
+    double maxValX;
 
     switch (calenderType) {
-      case CalenderType.c1y:
-        // Aim for roughly 12 labels (monthly)
-        // Max days in a year is 366. Interval should be around 30.
-        // XRange is number of days.
-        return (xRange / 12).roundToDouble().clamp(1.0, 30.0); 
-      case CalenderType.c1m:
-        // Aim for 4-5 labels (weekly)
-        // XRange is number of days in month (28-31)
-        return (xRange / 4).roundToDouble().clamp(1.0, 7.0);
       case CalenderType.c2w:
-        // Aim for 7 labels (every other day)
-        // XRange is 13 days
-        return (xRange / 7).roundToDouble().clamp(1.0, 2.0);
+        maxValX = 13.0;
+        return 2.0; // Show label every 2 days for 2 weeks
+      case CalenderType.c1m:
+        final daysInMonth =
+            DateTime(startDate.year, startDate.month + 1, 0).day;
+        maxValX = (daysInMonth - 1).toDouble();
+        // Aim for 4-5 labels (e.g., weekly)
+        return (maxValX / 4).roundToDouble().clamp(1.0, 7.0);
+      case CalenderType.c1y:
+        final lastDayOfYear = DateTime(startDate.year, 12, 31);
+        final firstDayOfYear = DateTime(startDate.year, 1, 1);
+        maxValX = lastDayOfYear.difference(firstDayOfYear).inDays.toDouble();
+        // Aim for 12 labels (monthly)
+        return (maxValX / 11).roundToDouble().clamp(1.0, 31.0); // Use 11 to get 12 intervals for 12 months
       default:
-        return (xRange / 5).roundToDouble().clamp(1.0, 5.0);
+        // Fallback, though all CalenderType cases should be handled.
+        // This calculation might need to use the actual minX and maxX from sampleData if they were dynamic.
+        // Since they are now fixed based on calenderType, this can also be fixed.
+        maxValX = 13.0; // Defaulting to 2W range for safety.
+        return (maxValX / 5).roundToDouble().clamp(1.0, 5.0);
     }
   }
 
